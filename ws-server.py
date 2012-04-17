@@ -68,7 +68,7 @@ for k, v in opts:
 
 listening_sock = socket.socket()
 listening_sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-listening_sock.bind(('127.1', websocket_port))
+listening_sock.bind((socket.gethostname(), websocket_port)) # Allow any one on the LAN to play with each other.
 listening_sock.listen(2)
 
 queue_addrs = []

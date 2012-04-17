@@ -3,7 +3,13 @@ var ws;
 
 function init_ws() {
 	uninit_ws();
-	ws = new WebSocket("ws://localhost:8005/");
+	// Resolve the path. Allow static override using global constants.
+	path = 
+	  'ws://:hostname::port'
+	    .replace(':hostname', ((typeof SERVER_HOSTNAME !== 'undefined') ? SERVER_HOSTNAME : window.location.hostname))
+	    .replace(':port', ((typeof SERVER_PORT !== 'undefined') ? SERVER_PORT : 8005));
+	
+	ws = new WebSocket(path);
 	ws.onopen = function() { console.log("ws opened."); }
 	ws.onclose = function() { console.log("ws closed."); }
 	ws.onmessage = function(e) {
